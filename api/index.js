@@ -3,6 +3,8 @@ const router = express.Router()
 const auth = require ('./auth')
 const restaurant = require ('./restaurant')
 const user = require ('./user')
+const note = require ('./note')
+const post = require ('./post')
 const { errorRes, successRes } = require('../common/response')
 const { notFound } = require('../common/middleware')
 const mongoose = require('mongoose')
@@ -23,10 +25,12 @@ mongoose.connect(mongoUrl, {
 
 router
 .get('/ping', (req, res) => res.json('pong'))
-
+.use('/note', note)
+.use('/post', post)
+.use('/user', user)
 .use('/auth', auth)
 
-.use(expressJwt({ secret: jwtSecretSalt }),
+.use(expressJwt({ secret: jwtSecretSalt, algorithms: ['HS256'] }),
 	(err, req, res, next) => {
 		if (err.name === 'UnauthorizedError') {
 			console.error(req.user, req.ip, 'invalid token');
@@ -36,7 +40,7 @@ router
 )
 
 .use('/restaurant', restaurant)
-.use('/user', user)
+
 
 .use(notFound)
 

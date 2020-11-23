@@ -9,7 +9,7 @@ const { saltRounds, jwtSecretSalt } = require('../config')
 
 
 router
-.use(onlyAdmin)
+//.use(onlyAdmin)
 
 .post('/', create(User))
 .get('/all/:page', usersAtPage, read(User))
