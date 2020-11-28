@@ -4,10 +4,7 @@ const mongoose = require('mongoose')
 
 function create (model, populate=[]) {
   return (req, res) => {
-    const newData = new model({
-      _id: new mongoose.Types.ObjectId(),
-      ...req.body
-    })
+    const newData = new model({ ...req.body })
     return newData.save()
       .then(t => t.populate(...populate, errData(res)))
       .catch(err => errorRes(res, err))

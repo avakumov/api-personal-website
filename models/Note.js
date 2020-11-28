@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
-const validator = require('validator')
 
 
 const noteSchema = new Schema({
-  _id: ObjectId,
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   //owner: { type: ObjectId, ref: 'User', required: true },
+  tag: {type: ObjectId, ref: 'Tag', required: true },
   updated_at: Date,
   created_at: {
     type: Date,

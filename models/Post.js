@@ -4,7 +4,6 @@ const ObjectId = Schema.Types.ObjectId
 
 
 const postSchema = new Schema({
-  _id: ObjectId,
   title: { type: String, required: true },
   content: { type: String, required: true },
   //owner: { type: ObjectId, ref: 'User', required: true },

@@ -5,6 +5,7 @@ const restaurant = require ('./restaurant')
 const user = require ('./user')
 const note = require ('./note')
 const post = require ('./post')
+const tag = require ('./tag')
 const { errorRes, successRes } = require('../common/response')
 const { notFound } = require('../common/middleware')
 const mongoose = require('mongoose')
@@ -17,7 +18,7 @@ const mongoUrl = prodMongoUrl
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
-  autoIndex: false,
+  //autoIndex: false,
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
@@ -26,6 +27,7 @@ mongoose.connect(mongoUrl, {
 router
 .get('/ping', (req, res) => res.json('pong'))
 .use('/note', note)
+.use('/tag', tag)
 .use('/post', post)
 .use('/user', user)
 .use('/auth', auth)
