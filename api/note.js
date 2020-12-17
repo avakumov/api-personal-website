@@ -9,7 +9,7 @@ router
   .get("/bytag/:tag", byTag(), read(Note, ["tag"]))
   .get("/:id", byId(), read(Note, ["tag"]))
   .post("/", create(Note, ["tag"]))
-  .put("/:_id", update(Note))
+  .put("/:_id", update(Note, ["tag"]))
   .delete("/:_id", remove(Note))
 
   .use(notFound);

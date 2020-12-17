@@ -31,7 +31,7 @@ function update (model, populate=[]) {
 
 function remove (model) {
   return (req, res) => (
-    model.deleteOne({ _id: req.params._id }, errData(res))
+    model.findOneAndDelete({ _id: req.params._id }, errData(res))
   )
 }
 
