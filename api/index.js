@@ -6,6 +6,7 @@ const user = require ('./user')
 const note = require ('./note')
 const post = require ('./post')
 const tag = require ('./tag')
+const telegram_chat = require ('./telegramChat')
 const { errorRes, successRes } = require('../common/response')
 const { notFound } = require('../common/middleware')
 const mongoose = require('mongoose')
@@ -30,6 +31,7 @@ router
 .use('/tag', tag)
 .use('/post', post)
 .use('/user', user)
+.use('/telegram/chat', telegram_chat)
 .use('/auth', auth)
 
 .use(expressJwt({ secret: jwtSecretSalt, algorithms: ['HS256'] }),
