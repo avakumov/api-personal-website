@@ -8,18 +8,12 @@ const { notOnlyMember, notFound } = require('../common/middleware')
 router
 
 
-.get('/', getAll(), read(TelegramChat))
+.get('/', read(TelegramChat))
 .post('/', create(TelegramChat))
 .put('/:_id', update(TelegramChat))
 .delete('/:_id', remove(TelegramChat))
 
 .use(notFound)
 
-function getAll () {
-	return (req, res, next) => {
-		req.body = [ {}, null ]
-		next()
-	}
-}
 
 module.exports = router

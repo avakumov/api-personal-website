@@ -10,10 +10,7 @@ router
 
 //.use(notOnlyMember)
 
-//.get('/all/:lng/:lat/:page', nearBy(), read(Restaurant, ['owner']))
-
-.get('/:page', getPosts(), read(Post))
-.get('/', getPosts(), read(Post))
+.get('/', read(Post))
 .post('/', create(Post))
 .put('/:_id', update(Post))
 .delete('/:_id', remove(Post))
