@@ -16,8 +16,16 @@ function notOnlyMember(req, res, next) {
 
 function queryToBody(req, res, next) {
   if (req.method === "GET") {
-    req.body = [req.query, null]
+    //TODO by page
+    let { page, limit = 10 } = req.query
+    if (page) {
+      delete req.query.page
+      delete req.query.limit
+      req.body = [req.query, null, { limit: 5, skip: (page - 1) * limit }]
+      return next()
+    }
   }
+  req.body = [req.query, null]
   return next()
 }
 

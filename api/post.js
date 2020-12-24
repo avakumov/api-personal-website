@@ -42,7 +42,7 @@ function pageQuery (query, page) {
 	return(
 		[	{...query},
 			null
-			, { limit: 10, skip: (page-1) * 10 }
+			, { limit: 5, skip: (page-1) * 5 }
 		]
 	)
 }
