@@ -12,9 +12,14 @@ const userSchema = new Schema({
     unique: true,
     validate: [ validator.isEmail, 'invalid email' ]
   },
+  from_service: {
+    type: String,
+    enum: ['google'],
+    required: true
+  },
   type: {
     type: String,
-    enum: ['member', 'owner', 'admin'],
+    enum: ['member', 'admin'],
     required: true
   },
   password: { type: String, required: true, select: false },
