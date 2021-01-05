@@ -34,7 +34,8 @@ describe('crud', function () {
     "name": "Test",
     "email": "test@test.com",
     "type": "admin",
-    "password": "12345"
+    "password": "12345",
+    "from_service": "google"
   }
 
   const restaurant = {
@@ -130,8 +131,8 @@ describe('crud', function () {
         .expect(200)
         .expect(function (res) {
           expect(res.body.data).to.be.a('object')
-          expect(res.body.data).to.have.property('ok')
-          expect(res.body.data.ok).to.equal(1)
+          expect(res.body).to.have.property('success')
+          expect(res.body.success).to.equal(true)
         })
         .end(done)
     })
