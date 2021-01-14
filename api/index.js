@@ -27,23 +27,26 @@ mongoose.connect(mongoUrl, {
 
 router
 .get('/ping', (req, res) => res.json('pong'))
+.use('/auth', auth)
 .use('/note', note)
 .use('/tag', tag)
 .use('/post', post)
 .use('/user', user)
 .use('/telegram/chat', telegram_chat)
-.use('/auth', auth)
 
-.use(expressJwt({ secret: jwtSecretSalt, algorithms: ['HS256'] }),
-	(err, req, res, next) => {
-		if (err.name === 'UnauthorizedError') {
-			console.error(req.user, req.ip, 'invalid token');
-			return errorRes(res, err, 'Login to proceed', 401)
-		}
-	}
-)
 
-.use('/restaurant', restaurant)
+// .use(expressJwt({ secret: jwtSecretSalt, algorithms: ['HS256'] }),
+// 	(err, req, res, next) => {
+// 		if (err.name === 'UnauthorizedError') {
+// 			console.error(req.user, req.ip, 'invalid token');
+// 			return errorRes(res, err, 'Login to proceed', 401)
+// 		}
+// 	}
+// )
+
+// .use('/restaurant', restaurant)
+
+
 
 
 .use(notFound)

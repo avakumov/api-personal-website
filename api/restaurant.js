@@ -11,7 +11,7 @@ router
 	read(Restaurant, ['owner'])
 )
 
-.use(notOnlyMember)
+//.use(notOnlyMember)
 
 .get('/all/:lng/:lat/:page', nearBy(), read(Restaurant, ['owner']))
 .post('/', create(Restaurant, ['owner']))

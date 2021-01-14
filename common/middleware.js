@@ -5,16 +5,28 @@ function notFound(req, res, _) {
 }
 
 function onlyAdmin(req, res, next) {
-  if (req.user.type === "admin") return next()
-  return invalidToken(req, res)
+  if (!req.user) {
+    return accessError(req, res, "Not authorized")
+  }
+  if (req.user.type !== "admin") {
+    return accessError(req, res, "Only for admins")
+  }
+  return next()
 }
 
-function notOnlyMember(req, res, next) {
-  if (req.user.type === "member") return invalidToken(req, res)
+function onlySoldier(req, res, next) {
+  if (!req.user) {
+    return accessError(req, res, "Not authorized")
+  }
+  // if (req.user.type !== "soldier" || req.user.type !== "admin") {
+  //   return accessError(req, res, "Only for users and admins")
+  // }
   return next()
 }
 
 function queryToBody(req, res, next) {
+  console.log("USER: ", req.user)
+  console.log("REQ: ", req)
   if (req.method === "GET") {
     let { page, limit = 10 } = req.query
     if (page) {
@@ -28,11 +40,11 @@ function queryToBody(req, res, next) {
   return next()
 }
 
-function invalidToken(req, res) {
-  const errMsg = "INVALID TOKEN"
+function accessError(req, res, message) {
+  const errMsg = `ACCESS ERROR. ${message}`
   const userText = JSON.stringify(req.user)
   const err = `${errMsg} ERROR - user: ${userText}, IP: ${req.ip}`
   return errorRes(res, err, errMsg, 401)
 }
 
-module.exports = { notFound, onlyAdmin, notOnlyMember, queryToBody }
+module.exports = { notFound, onlyAdmin, onlySoldier, queryToBody }

@@ -12,17 +12,22 @@ const userSchema = new Schema({
     unique: true,
     validate: [ validator.isEmail, 'invalid email' ]
   },
-  from_service: {
+  provider_user_id: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  provider: {
     type: String,
     enum: ['google'],
     required: true
   },
   type: {
     type: String,
-    enum: ['member', 'admin'],
+    enum: ['soldier', 'admin'],
     required: true
   },
-  password: { type: String, required: true, select: false },
+  //password: { type: String, required: true, select: false },
 
   updated_at: Date,
 });

@@ -9,13 +9,11 @@ const { saltRounds, jwtSecretSalt } = require('../config')
 
 
 router
-//.use(onlyAdmin)
-
-.post('/', create(User))
-.get('/all/:page', usersAtPage, read(User))
-.put('/:_id', handlePassword, update(User))
-.delete('/:_id', remove(User))
-
+.use(onlyAdmin)
+.get("/", read(User))
+.post("/", create(User))
+.put("/:_id", update(User))
+.delete("/:_id", remove(User))
 .use(notFound)
 
 function usersAtPage (req, res, next) {
