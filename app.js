@@ -6,11 +6,12 @@ const cors = require("cors")
 
 const { notFound, queryToBody } = require("./common/middleware")
 const api = require("./api")
+const { devClientHost, prodClientHost } = require("./config")
 
 const app = express()
-
+const clientHost = process.env.NODE_ENV === "production" ? prodClientHost : devClientHost
 app
-  .use(cors())
+  .use(cors({ credentials: true, origin: clientHost }))
   .use(express.json())
   .use(require("cookie-parser")())
   .use(require("body-parser").urlencoded({ extended: true }))
@@ -22,6 +23,5 @@ app
   .use("/api", api)
 
   .use(notFound)
-
 
 module.exports = app

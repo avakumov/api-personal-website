@@ -14,8 +14,7 @@ const { devMongoUrl, prodMongoUrl } = require('../config')
 const expressJwt = require('express-jwt')
 const { jwtSecretSalt } = require('../config')
 
-//const mongoUrl = process.platform === 'darwin' ? devMongoUrl : prodMongoUrl
-const mongoUrl = prodMongoUrl
+const mongoUrl = process.env.NODE_ENV === 'production' ? prodMongoUrl : devMongoUrl
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,

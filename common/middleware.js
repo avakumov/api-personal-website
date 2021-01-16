@@ -26,7 +26,6 @@ function onlySoldier(req, res, next) {
 
 function queryToBody(req, res, next) {
   console.log("USER: ", req.user)
-  console.log("REQ: ", req)
   if (req.method === "GET") {
     let { page, limit = 10 } = req.query
     if (page) {
