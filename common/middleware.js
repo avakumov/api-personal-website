@@ -6,26 +6,26 @@ function notFound(req, res, _) {
 
 function onlyAdmin(req, res, next) {
   if (!req.user) {
-    return accessError(req, res, "Not authorized")
+    return errorRes(res, "Not authorized", "failed operation", 401)
   }
   if (req.user.type !== "admin") {
-    return accessError(req, res, "Only for admins")
+    return errorRes(res, "Only for admins", "failed operation", 403)
   }
   return next()
 }
 
-function onlySoldier(req, res, next) {
+function onlyUser(req, res, next) {
+  console.log("USER: ", req.user)
   if (!req.user) {
-    return accessError(req, res, "Not authorized")
+    return errorRes(res, "Not authorized", "failed operation", 401)
   }
-  // if (req.user.type !== "soldier" || req.user.type !== "admin") {
-  //   return accessError(req, res, "Only for users and admins")
-  // }
-  return next()
+  if (req.user.type === "soldier" || req.user.type === "admin") {
+    return next()
+  }
+  return errorRes(res, "Only for users and admins", "failed operation", 403)
 }
 
 function queryToBody(req, res, next) {
-  console.log("USER: ", req.user)
   if (req.method === "GET") {
     let { page, limit = 10 } = req.query
     if (page) {
@@ -39,11 +39,12 @@ function queryToBody(req, res, next) {
   return next()
 }
 
-function accessError(req, res, message) {
-  const errMsg = `ACCESS ERROR. ${message}`
-  const userText = JSON.stringify(req.user)
-  const err = `${errMsg} ERROR - user: ${userText}, IP: ${req.ip}`
-  return errorRes(res, err, errMsg, 401)
+function addOwnerToBody(req, res, next) {
+  if (req.user) {
+    req.body.owner = req.user._id
+    return next()
+  }
+  return next()
 }
 
-module.exports = { notFound, onlyAdmin, onlySoldier, queryToBody }
+module.exports = { notFound, onlyAdmin, onlyUser, queryToBody, addOwnerToBody }

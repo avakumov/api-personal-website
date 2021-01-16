@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const { create, read, update, remove } = require('../common/crud')
 const Tag = require('../models/Tag')
-const { onlySoldier, notFound } = require('../common/middleware')
+const { onlyUser, addOwnerToBody, notFound } = require('../common/middleware')
 
 
 router
-.use(onlySoldier)
+.use(onlyUser, addOwnerToBody)
 .get('/', read(Tag))
 .post('/', create(Tag))
 .put('/:_id', update(Tag))

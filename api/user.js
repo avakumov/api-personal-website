@@ -3,13 +3,13 @@ const router = express.Router()
 const { create, read, update, remove } = require('../common/crud')
 const User = require('../models/User')
 const { errorRes } = require('../common/response')
-const { onlyAdmin, notFound } = require('../common/middleware')
+const { onlyAdmin, addOwnerToBody, notFound } = require('../common/middleware')
 const bcrypt = require('bcrypt')
 const { saltRounds, jwtSecretSalt } = require('../config')
 
 
 router
-.use(onlyAdmin)
+.use(onlyAdmin, addOwnerToBody)
 .get("/", read(User))
 .post("/", create(User))
 .put("/:_id", update(User))

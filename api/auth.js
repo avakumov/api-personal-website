@@ -11,10 +11,9 @@ passport.use(
     {
       clientID: googleClientID,
       clientSecret: googleClientSecret,
-      callbackURL: devGoogleAuthCallback
+      callbackURL: devGoogleAuthCallback,
     },
     async function myVerifyCallbackFn(accessToken, refreshToken, profile, cb) {
-      console.log("PROFILE: ", profile)
       try {
         const user = await User.findOne({ provider: "google", provider_user_id: profile.id })
         if (!user) {
@@ -37,12 +36,10 @@ passport.use(
 
 // User session support for our hypothetical `user` objects.
 passport.serializeUser(function (user, cb) {
-  console.log("SERIALIZE: ", user)
   cb(null, user._id)
 })
 
 passport.deserializeUser(async (id, cb) => {
-  console.log("DESERIALIZE ID: ", id)
   const user = await User.findById(id)
   cb(null, user)
 })
@@ -50,11 +47,12 @@ passport.deserializeUser(async (id, cb) => {
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }))
 
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), function (req, res) {
-   console.log("USER LOGIN: ", req.user.name)
-  //res.status(200).send({success: true, data: req.user})
-  //res.redirect("http://localhost:8080/adm")
-  res.redirect("/api/tag")
- 
+  res.redirect("back")
+})
+
+router.get("/logout", function (req, res) {
+  req.logout()
+  res.redirect("back")
 })
 
 module.exports = router
