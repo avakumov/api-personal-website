@@ -5,6 +5,8 @@ const router = express.Router()
 const GoogleStrategy = require("passport-google-oauth20").Strategy
 const { googleClientID, googleClientSecret, devGoogleAuthCallback } = require("../config")
 const User = require("../models/User")
+const { successRes } = require("../common/response")
+const { onlyUser } = require("../common/middleware")
 
 passport.use(
   new GoogleStrategy(
@@ -50,9 +52,13 @@ router.get("/google/callback", passport.authenticate("google", { failureRedirect
   res.redirect("back")
 })
 
-router.get("/logout", function (req, res) {
+router.get("/logout", onlyUser, function (req, res) {
   req.logout()
   res.redirect("back")
+})
+
+router.get("/profile", onlyUser, function (req, res) {
+  successRes(res, req.user)
 })
 
 module.exports = router
