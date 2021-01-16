@@ -1,5 +1,4 @@
-const { errData, errorRes, successRes } = require('../common/response')
-const mongoose = require('mongoose')
+const { errData, errorRes } = require('../common/response')
 
 
 function create (model, populate=[]) {
@@ -12,9 +11,9 @@ function create (model, populate=[]) {
 }
 
 function read (model, populate=[]) {
-  return (req, res) => (
-    model.find(...req.body, errData(res)).populate(...populate)
-  )
+  return (req, res) => {
+    return model.find(...req.body, errData(res)).populate(...populate)
+  }
 }
 
 function update (model, populate=[]) {
