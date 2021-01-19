@@ -23,6 +23,7 @@ passport.use(
             name: profile.name.familyName + " " + profile.name.givenName,
             email: profile._json.email,
             provider: "google",
+            avatar: profile._json.picture,
             provider_user_id: profile.id,
             type: "soldier",
           })

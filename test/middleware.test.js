@@ -1,4 +1,4 @@
-const { notFound, onlyAdmin, notOnlyMember } = require('../common/middleware')
+const { notFound, onlyAdmin } = require('../common/middleware')
 const request = require('supertest');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -8,7 +8,7 @@ app
 .use(bodyParser.json())
 .post('/notFound', notFound)
 .post('/onlyAdmin', addUserType, onlyAdmin, notFound)
-.post('/notOnlyMember', addUserType, notOnlyMember, notFound)
+.post('/notOnlyMember', addUserType, onlyAdmin, notFound)
 
 function addUserType (req, res, next) {
   req.user = { type: req.body.type }

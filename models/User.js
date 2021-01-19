@@ -1,34 +1,34 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-const validator = require('validator')
-
+const validator = require("validator")
 
 const userSchema = new Schema({
   name: { type: String, required: true },
+  avatar: { type: String },
   email: {
     type: String,
     required: true,
     unique: true,
-    validate: [ validator.isEmail, 'invalid email' ]
+    validate: [validator.isEmail, "invalid email"],
   },
   provider_user_id: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   provider: {
     type: String,
-    enum: ['google'],
-    required: true
+    enum: ["google"],
+    required: true,
   },
   type: {
     type: String,
-    enum: ['soldier', 'admin'],
-    required: true
+    enum: ["soldier", "admin"],
+    required: true,
   },
   //password: { type: String, required: true, select: false },
 
   updated_at: Date,
-});
+})
 
-module.exports = mongoose.model('User', userSchema, 'users');
+module.exports = mongoose.model("User", userSchema, "users")

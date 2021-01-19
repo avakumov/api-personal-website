@@ -1,6 +1,6 @@
 const { errorRes } = require("./response")
 
-function notFound(req, res, _) {
+function notFound(req, res) {
   return errorRes(res, "no routes", "you are lost.", 404)
 }
 
