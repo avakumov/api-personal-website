@@ -1,18 +1,17 @@
 const express = require("express")
 const router = express.Router()
 const auth = require("./auth")
-const restaurant = require("./restaurant")
 const user = require("./user")
 const note = require("./note")
 const post = require("./post")
 const tag = require("./tag")
 const telegram_chat = require("./telegramChat")
-const { errorRes, successRes } = require("../common/response")
+// const { errorRes, successRes } = require("../common/response")
 const { notFound } = require("../common/middleware")
 const mongoose = require("mongoose")
 const { devMongoUrl, prodMongoUrl } = require("../config")
-const expressJwt = require("express-jwt")
-const { jwtSecretSalt } = require("../config")
+// const expressJwt = require("express-jwt")
+// const { jwtSecretSalt } = require("../config")
 
 const mongoUrl = process.env.NODE_ENV === "production" ? prodMongoUrl : devMongoUrl
 
@@ -40,8 +39,6 @@ router
   // 		}
   // 	}
   // )
-
-  // .use('/restaurant', restaurant)
 
   .use(notFound)
 

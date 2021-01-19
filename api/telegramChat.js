@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { create, read, update, remove } = require("../common/crud")
 const TelegramChat = require("../models/TelegramChat")
-const { notOnlyMember, notFound } = require("../common/middleware")
+const { notFound } = require("../common/middleware")
 
 router
 
