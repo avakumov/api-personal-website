@@ -9,6 +9,11 @@
     "lint": "./node_modules/eslint/bin/eslint.js --fix .",
     "format": "./node_modules/prettier/bin-prettier.js --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm run lint && npm run test"
+    }
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -28,6 +33,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.18.0",
+    "husky": "^4.3.8",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
     "prettier": "^2.2.1",
