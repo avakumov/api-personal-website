@@ -1,43 +1,40 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const { create, read, update, remove } = require('../common/crud')
-const User = require('../models/User')
-const { errorRes } = require('../common/response')
-const { onlyAdmin, addOwnerToBody, notFound } = require('../common/middleware')
-const bcrypt = require('bcrypt')
-const { saltRounds, jwtSecretSalt } = require('../config')
-
+const { create, read, update, remove } = require("../common/crud")
+const User = require("../models/User")
+const { errorRes } = require("../common/response")
+const { onlyAdmin, addOwnerToBody, notFound } = require("../common/middleware")
+const bcrypt = require("bcrypt")
+const { saltRounds, jwtSecretSalt } = require("../config")
 
 router
-.use(onlyAdmin, addOwnerToBody)
-.get("/", read(User))
-.post("/", create(User))
-.put("/:_id", update(User))
-.delete("/:_id", remove(User))
-.use(notFound)
+  .use(onlyAdmin, addOwnerToBody)
+  .get("/", read(User))
+  .post("/", create(User))
+  .put("/:_id", update(User))
+  .delete("/:_id", remove(User))
+  .use(notFound)
 
-function usersAtPage (req, res, next) {
-	req.body = [ {}, null, { limit: 25, skip: (req.params.page-1) * 25 } ]
-	return next()
+function usersAtPage(req, res, next) {
+  req.body = [{}, null, { limit: 25, skip: (req.params.page - 1) * 25 }]
+  return next()
 }
 
-function handlePassword (req, res, next) {
-	const { password, ...body } = req.body
-	if (!password || password.length < 1) {
-		req.body = body
-		return next()
-	}
-	if (password.length < 6)
-		return errorRes(res, 'invalid password', 'password is too short')
+function handlePassword(req, res, next) {
+  const { password, ...body } = req.body
+  if (!password || password.length < 1) {
+    req.body = body
+    return next()
+  }
+  if (password.length < 6) return errorRes(res, "invalid password", "password is too short")
 
-	bcrypt.hash(password, saltRounds, (err, hash) => {
-		if (err)
-			return errorRes(res, err, 'password error')
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) return errorRes(res, err, "password error")
 
-		const data = {...body, password: hash}
-		req.body = data
-		return next()
-	})
+    const data = { ...body, password: hash }
+    req.body = data
+    return next()
+  })
 }
 
-module.exports = router;
+module.exports = router
