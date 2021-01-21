@@ -41,8 +41,12 @@ function queryToBody(req, res, next) {
 
 function addOwnerToBody(req, res, next) {
   if (req.user) {
-    req.body[0]["owner"] = req.user._id
-    return next()
+    if (req.method === "GET") {
+      req.body[0]["owner"] = req.user._id
+      return next()
+    } else {
+      req.body.owner = req.user._id
+    }
   }
   return next()
 }

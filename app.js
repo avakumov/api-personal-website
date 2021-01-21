@@ -4,14 +4,13 @@ const logger = require("morgan")
 const passport = require("passport")
 const cors = require("cors")
 
-const { notFound, queryToBody } = require("./common/middleware")
+const { notFound, queryToBody, addOwnerToBody } = require("./common/middleware")
 const api = require("./api")
-const { devClientHost, prodClientHost } = require("./config")
+const { clientURL } = require("./config")
 
 const app = express()
-const clientHost = process.env.NODE_ENV === "production" ? prodClientHost : devClientHost
 app
-  .use(cors({ credentials: true, origin: clientHost }))
+  .use(cors({ credentials: true, origin: clientURL }))
   .use(express.json())
   .use(require("cookie-parser")())
   .use(require("body-parser").urlencoded({ extended: true }))
@@ -20,6 +19,7 @@ app
   .use(passport.session())
   .use(logger("dev"))
   .use(queryToBody)
+  .use(addOwnerToBody)
   .use("/api", api)
 
   .use(notFound)

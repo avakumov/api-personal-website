@@ -9,11 +9,9 @@ const telegram_chat = require("./telegramChat")
 // const { errorRes, successRes } = require("../common/response")
 const { notFound } = require("../common/middleware")
 const mongoose = require("mongoose")
-const { devMongoUrl, prodMongoUrl } = require("../config")
+const { mongoUrl } = require("../config")
 // const expressJwt = require("express-jwt")
 // const { jwtSecretSalt } = require("../config")
-
-const mongoUrl = process.env.NODE_ENV === "production" ? prodMongoUrl : devMongoUrl
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
