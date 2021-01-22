@@ -6,11 +6,11 @@ const cors = require("cors")
 
 const { notFound, queryToBody, addOwnerToBody } = require("./common/middleware")
 const api = require("./api")
-const { clientURL } = require("./config")
+const { originURL } = require("./config")
 
 const app = express()
 app
-  .use(cors({ credentials: true, origin: clientURL }))
+  .use(cors({ credentials: true, origin: originURL}))
   .use(express.json())
   .use(require("cookie-parser")())
   .use(require("body-parser").urlencoded({ extended: true }))
